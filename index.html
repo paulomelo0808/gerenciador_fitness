@@ -3,29 +3,50 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Gerenciador de Treinos</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
     <link
         href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Work+Sans:wght@400;500;600&display=swap"
         rel="stylesheet"
     >
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
-    <script src="script.js" defer></script>
+    <script
+        src="script.js"
+        defer
+    ></script>
 </head>
 
 <body>
 
     <header class="scoreboard">
+
         <div class="scoreboard__inner">
 
-            <h1>Gerenciador de Treinos</h1>
+            <h1>
+                Gerenciador de Treinos
+            </h1>
 
             <p>
                 Organize seus exercícios e acompanhe seu treino.
@@ -36,10 +57,15 @@
             </p>
 
             <div class="scoreboard__readout">
+
                 <span id="doneCount">0</span>
+
                 <span>/</span>
+
                 <span id="totalCount">0</span>
+
                 <span>concluídos</span>
+
             </div>
 
             <progress
@@ -51,139 +77,108 @@
             </progress>
 
         </div>
+
     </header>
 
 
-    <main class="layout">
+    <main class="treino-layout">
 
-        <section
-            class="panel panel--form"
-            aria-labelledby="form-title"
-        >
+        <section class="novo-exercicio">
 
-            <h2 id="form-title" class="panel__title">
+            <h2>
                 Novo exercício
             </h2>
 
-            <form id="exerciseForm" class="form">
+            <form id="form-exercicio">
 
-                <label class="field">
-                    <span class="field__label">
-                        Exercício
-                    </span>
-
-                    <input
-                        type="text"
-                        id="exerciseName"
-                        placeholder="Ex.: Agachamento"
-                        required
-                    >
+                <label for="nome">
+                    Exercício
                 </label>
 
-
-                <div class="field-row">
-
-                    <label class="field">
-                        <span class="field__label">
-                            Séries
-                        </span>
-
-                        <input
-                            type="number"
-                            id="exerciseSets"
-                            min="1"
-                            value="3"
-                            required
-                        >
-                    </label>
+                <input
+                    type="text"
+                    id="nome"
+                    placeholder="Ex.: Agachamento"
+                    required
+                >
 
 
-                    <label class="field">
-                        <span class="field__label">
-                            Repetições
-                        </span>
-
-                        <input
-                            type="number"
-                            id="exerciseReps"
-                            min="1"
-                            value="10"
-                            required
-                        >
-                    </label>
-
-                </div>
-
-
-                <label class="field">
-                    <span class="field__label">
-                        Carga (kg, opcional)
-                    </span>
-
-                    <input
-                        type="number"
-                        id="exerciseWeight"
-                        min="0"
-                        step="0.5"
-                        placeholder="0"
-                    >
+                <label for="series">
+                    Séries
                 </label>
+
+                <input
+                    type="number"
+                    id="series"
+                    min="1"
+                    value="3"
+                    required
+                >
+
+
+                <label for="repeticoes">
+                    Repetições
+                </label>
+
+                <input
+                    type="number"
+                    id="repeticoes"
+                    min="1"
+                    value="10"
+                    required
+                >
+
+
+                <label for="carga">
+                    Carga (kg, opcional)
+                </label>
+
+                <input
+                    type="number"
+                    id="carga"
+                    min="0"
+                    value="0"
+                >
 
 
                 <button
                     type="submit"
-                    class="btn btn--primary"
+                    class="btn-adicionar"
                 >
                     Adicionar exercício
                 </button>
 
+
+                <button
+                    type="button"
+                    id="btn-limpar"
+                    class="btn-limpar"
+                >
+                    Limpar treino
+                </button>
+
             </form>
-
-
-            <button
-                type="button"
-                id="resetDay"
-                class="btn btn--ghost"
-            >
-                Limpar treino
-            </button>
 
         </section>
 
 
-        <section
-            class="panel panel--list"
-            aria-labelledby="list-title"
-        >
+        <section class="exercicios">
 
-            <div class="panel__head">
+            <h2>
+                Exercícios
+            </h2>
 
-                <h2
-                    id="list-title"
-                    class="panel__title"
-                >
-                    Exercícios
-                </h2>
+            <p>
+                Marque os exercícios conforme forem concluídos.
+            </p>
 
-                <span class="panel__hint">
-                    Marque os exercícios conforme forem concluídos.
-                </span>
+            <div id="lista-exercicios">
+
+                <p>
+                    Nenhum exercício adicionado.
+                </p>
 
             </div>
-
-
-            <ul
-                id="exerciseList"
-                class="exercise-list"
-            ></ul>
-
-
-            <p
-                id="emptyState"
-                class="empty-state"
-            >
-                Nenhum exercício adicionado.
-            </p>
 
         </section>
 
@@ -191,18 +186,19 @@
 
 
     <footer class="foot">
+
         <p>
             Gerenciador Fitness — Disciplina de Desenvolvimento Web.
         </p>
-    
+
         <p>
             Professor: Gabriel Cardoso
             <br>
             Feito por Paulo Melo e Victor Aguiar
         </p>
+
     </footer>
-    
-<script src="script.js"></script>
+
 </body>
 
 </html>
