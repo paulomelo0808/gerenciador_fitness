@@ -1,19 +1,18 @@
-const formulario = document.querySelector("#exerciseForm");
+const formulario = document.querySelector("#form-exercicio");
 
-const nomeInput = document.querySelector("#exerciseName");
-const seriesInput = document.querySelector("#exerciseSets");
-const repeticoesInput = document.querySelector("#exerciseReps");
-const cargaInput = document.querySelector("#exerciseWeight");
+const nomeInput = document.querySelector("#nome");
+const seriesInput = document.querySelector("#series");
+const repeticoesInput = document.querySelector("#repeticoes");
+const cargaInput = document.querySelector("#carga");
 
-const listaExercicios = document.querySelector("#exerciseList");
-const estadoVazio = document.querySelector("#emptyState");
+const listaExercicios = document.querySelector("#lista-exercicios");
 
 const concluidosTexto = document.querySelector("#doneCount");
 const totalTexto = document.querySelector("#totalCount");
 
-const barraProgresso = document.querySelector("progress");
+const barraProgresso = document.querySelector("#trainingProgress");
 
-const botaoLimpar = document.querySelector("#resetDay");
+const botaoLimpar = document.querySelector("#btn-limpar");
 
 let exercicios = [];
 let proximoId = 1;
@@ -59,6 +58,14 @@ formulario.addEventListener("submit", function (evento) {
 
   formulario.reset();
 
+  /*
+    Como reset() apaga os valores padrão,
+    colocamos novamente 3, 10 e 0.
+  */
+  seriesInput.value = 3;
+  repeticoesInput.value = 10;
+  cargaInput.value = 0;
+
   nomeInput.focus();
 
   atualizarTela();
@@ -83,14 +90,17 @@ function renderizarExercicios() {
   listaExercicios.innerHTML = "";
 
   if (exercicios.length === 0) {
-    estadoVazio.hidden = false;
+    listaExercicios.innerHTML = `
+      <p class="empty-message">
+        Nenhum exercício adicionado.
+      </p>
+    `;
+
     return;
   }
 
-  estadoVazio.hidden = true;
-
   exercicios.forEach(function (exercicio) {
-    const item = document.createElement("li");
+    const item = document.createElement("div");
 
     item.classList.add("exercise-item");
 
@@ -131,7 +141,6 @@ function renderizarExercicios() {
         type="button"
         class="exercise-remove"
         data-remove="${exercicio.id}"
-        aria-label="Remover ${escaparHTML(exercicio.nome)}"
       >
         Remover
       </button>
@@ -202,8 +211,16 @@ function atualizarResumo() {
   concluidosTexto.textContent = concluidos;
   totalTexto.textContent = total;
 
-  barraProgresso.max = total > 0 ? total : 1;
-  barraProgresso.value = concluidos;
+  /*
+    A barra trabalha de 0 a 100.
+  */
+  const porcentagem =
+    total === 0
+      ? 0
+      : (concluidos / total) * 100;
+
+  barraProgresso.max = 100;
+  barraProgresso.value = porcentagem;
 }
 
 
