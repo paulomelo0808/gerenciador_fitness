@@ -10,6 +10,8 @@
   --accent-ink: #ffffff;
 
   --danger: #e1483a;
+  --danger-soft: #fff1ef;
+
   --sage: #7c9a82;
 
   --radius: 4px;
@@ -47,6 +49,10 @@ input {
   font: inherit;
 }
 
+button {
+  cursor: pointer;
+}
+
 
 /* =========================
    CABEÇALHO
@@ -78,9 +84,9 @@ input {
 }
 
 .header__description {
-  margin: 0.75rem 0 0;
-
   max-width: 500px;
+
+  margin: 0.75rem 0 0;
 
   color: var(--sage);
 
@@ -97,11 +103,11 @@ input {
   max-width: 900px;
 
   margin: 0 auto;
-
   padding: 2rem 1.5rem 3rem;
 
   display: grid;
   grid-template-columns: 1fr;
+
   gap: 1.5rem;
 }
 
@@ -111,12 +117,12 @@ input {
 ========================= */
 
 .panel {
+  padding: 1.5rem;
+
   background: var(--panel);
 
   border: 1px solid var(--line);
   border-radius: var(--radius);
-
-  padding: 1.5rem;
 }
 
 .panel__title {
@@ -194,10 +200,10 @@ input {
 ========================= */
 
 .button {
+  padding: 0.75rem 1rem;
+
   border: 1px solid transparent;
   border-radius: var(--radius);
-
-  padding: 0.75rem 1rem;
 
   font-weight: 600;
 
@@ -234,22 +240,21 @@ input {
 }
 
 
-/* botão excluir */
+/* botão limpar */
 
-.button--delete {
-  padding: 0.4rem 0.6rem;
-
+.button--secondary {
   background: transparent;
   color: var(--ink-soft);
 
-  border-color: transparent;
-
-  font-size: 0.85rem;
+  border-color: var(--line);
 }
 
-.button--delete:hover {
+.button--secondary:hover {
   color: var(--danger);
+
   border-color: var(--danger);
+
+  background: var(--danger-soft);
 }
 
 
@@ -284,12 +289,12 @@ progress {
   appearance: none;
   -webkit-appearance: none;
 
-  border: none;
-  border-radius: 999px;
-
   overflow: hidden;
 
   background: var(--line);
+
+  border: none;
+  border-radius: 999px;
 }
 
 
@@ -333,12 +338,13 @@ progress::-moz-progress-bar {
   flex-direction: column;
 }
 
+
+/* cada exercício */
+
 .exercise-item {
-  display: grid;
-
-  grid-template-columns: auto 1fr auto;
-
+  display: flex;
   align-items: center;
+  justify-content: space-between;
 
   gap: 1rem;
 
@@ -358,11 +364,28 @@ progress::-moz-progress-bar {
 }
 
 
+/* área clicável do exercício */
+
+.exercise-check {
+  min-width: 0;
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+
+  gap: 0.9rem;
+
+  cursor: pointer;
+}
+
+
 /* checkbox */
 
-.exercise-item__checkbox {
+.exercise-check input[type="checkbox"] {
   width: 21px;
   height: 21px;
+
+  flex-shrink: 0;
 
   accent-color: var(--accent);
 
@@ -370,22 +393,35 @@ progress::-moz-progress-bar {
 }
 
 
-/* informações do exercício */
+/* informações */
 
-.exercise-item__content {
+.exercise-info {
   min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.15rem;
 }
 
-.exercise-item__name {
-  margin: 0;
+
+/* nome */
+
+.exercise-name {
+  color: var(--ink);
 
   font-size: 1rem;
   font-weight: 600;
+
+  transition:
+    color 0.2s ease,
+    text-decoration-color 0.2s ease;
 }
 
-.exercise-item__details {
-  margin: 0.2rem 0 0;
 
+/* detalhes */
+
+.exercise-details {
   color: var(--ink-soft);
 
   font-size: 0.85rem;
@@ -394,11 +430,55 @@ progress::-moz-progress-bar {
 
 /* exercício concluído */
 
-.exercise-item--done .exercise-item__name {
+.exercise-item--done .exercise-name {
   color: var(--ink-soft);
 
   text-decoration: line-through;
   text-decoration-color: var(--sage);
+}
+
+.exercise-item--done .exercise-details {
+  opacity: 0.7;
+}
+
+
+/* =========================
+   BOTÃO REMOVER EXERCÍCIO
+========================= */
+
+.exercise-remove {
+  flex-shrink: 0;
+
+  padding: 0.4rem 0.6rem;
+
+  background: transparent;
+  color: var(--ink-soft);
+
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+
+  font-size: 0.8rem;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.exercise-remove:hover {
+  color: var(--danger);
+
+  background: var(--danger-soft);
+
+  border-color: var(--danger);
+}
+
+.exercise-remove:focus-visible {
+  outline: 2px solid var(--danger);
+  outline-offset: 2px;
 }
 
 
@@ -427,13 +507,16 @@ progress::-moz-progress-bar {
   max-width: 900px;
 
   margin: 0 auto;
-
   padding: 0 1.5rem 2rem;
 
   color: var(--ink-soft);
 
   font-size: 0.8rem;
   text-align: center;
+}
+
+.footer p {
+  margin: 0.3rem 0;
 }
 
 
@@ -474,14 +557,16 @@ progress::-moz-progress-bar {
   }
 
   .exercise-item {
-    grid-template-columns: auto 1fr;
+    align-items: flex-start;
+
+    gap: 0.5rem;
   }
 
-  .button--delete {
-    grid-column: 2;
+  .exercise-check {
+    align-items: flex-start;
+  }
 
-    justify-self: start;
-
-    padding-left: 0;
+  .exercise-remove {
+    padding: 0.3rem 0.45rem;
   }
 }
