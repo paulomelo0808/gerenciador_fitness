@@ -207,7 +207,10 @@ function atualizarResumo() {
   concluidosTexto.textContent = concluidos;
   totalTexto.textContent = total;
 
-
+  /*
+    A barra trabalha de 0 a 100.
+  */
+  
   const porcentagem =
     total === 0
       ? 0
