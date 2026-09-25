@@ -58,10 +58,6 @@ formulario.addEventListener("submit", function (evento) {
 
   formulario.reset();
 
-  /*
-    Como reset() apaga os valores padrão,
-    colocamos novamente 3, 10 e 0.
-  */
   seriesInput.value = 3;
   repeticoesInput.value = 10;
   cargaInput.value = 0;
@@ -211,9 +207,7 @@ function atualizarResumo() {
   concluidosTexto.textContent = concluidos;
   totalTexto.textContent = total;
 
-  /*
-    A barra trabalha de 0 a 100.
-  */
+
   const porcentagem =
     total === 0
       ? 0
